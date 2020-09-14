@@ -8,6 +8,7 @@ const seedDB = require("./seeds");
 var app = express();
 app.use(bodyPaser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
 
 // Connect to the Database
 mongoose
@@ -33,14 +34,14 @@ app.get("/campgrounds", (req, res) => {
         if (err) {
             console.log(err.message);
         } else {
-            res.render("index", { campgrounds: allCampgrounds });
+            res.render("campgrounds/index", { campgrounds: allCampgrounds });
         }
     });
 });
 
 // GET - New - create a new campground
 app.get("/campgrounds/new", (req, res) => {
-    res.render("new");
+    res.render("campgrounds/new");
 });
 
 // POST - add new campground
@@ -70,9 +71,42 @@ app.get("/campgrounds/:id", (req, res) => {
             if (err) {
                 console.log(err.message);
             } else {
-                res.render("show", { campground: foundCampground });
+                res.render("campgrounds/show", { campground: foundCampground });
             }
         });
+});
+
+// ====================
+// COMMENTS
+// ====================
+app.get("/campgrounds/:id/comments/new", (req, res) => {
+    Campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err.message);
+        } else {
+            res.render("comments/new", { campground: campground });
+        }
+    });
+});
+
+app.post("/campgrounds/:id/comments", (req, res) => {
+    // look up campgrounds by using id
+    Campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err.message);
+            res.redirect("/campgrounds");
+        } else {
+            Comment.create(req.body.comment, (err, comment) => {
+                if (err) {
+                    console.log(err.message);
+                } else {
+                    campground.comments.push(comment);
+                    campground.save();
+                    res.redirect("/campgrounds/" + campground._id);
+                }
+            });
+        }
+    });
 });
 
 app.listen(4444, () => {
