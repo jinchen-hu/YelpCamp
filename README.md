@@ -1,6 +1,6 @@
 # YelpCamp
 
-# ![homepage-screenshot](images\homepage-screenshot.png)
+# ![homepage-screenshot](images/homepage-screenshot.png)
 
 YelpCamp is a fully-functional Node.js web application, which is campground site with the features that are very similar with [Yelp](https://www.yelp.com/)
 
