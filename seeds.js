@@ -1,50 +1,85 @@
-const mongoose = require("mongoose");
-const Campground = require("./models/campground");
-const Comment = require("./models/comment");
+var mongoose = require("mongoose");
+var Campground = require("./models/campground");
+var Comment = require("./models/comment");
 
-var seeds = [
+var data = [
     {
-        name: "Cloud's Rest",
+        name: "Peace Dark",
+        image: "https://cdn.stocksnap.io/img-thumbs/280h/L29FUNSW0T.jpg",
+        description:
+            "Mont-Tremblant isn’t just a ski resort. While the skiing here is undeniably appreciated, camping in the largest and oldest provincial park in Quebec offers a unique access to the Laurentian mountains, a range containing over 400 rivers, lakes and streams. ",
+        author: {
+            id: "588c2e092403d111454fff76",
+            username: "Jack",
+        },
+    },
+    {
+        name: "Lake Side",
         image:
-            "https://cdn.stocksnap.io/img-thumbs/280h/camp-tent_PTERNSNX0F.jpg",
+            "https://cdn.stocksnap.io/img-thumbs/280h/people-man_D6YUV5A6O8.jpg",
         description:
-            "The back woods, mountains, rivers and lakes of Québec and the Northeast make for excellent camping near Montreal. Whether you’re looking for an easy-going full-service RV experience or a rugged adventure off the beaten path, these campgrounds are your best bet. All offer access to some form of (rugged) rest and relaxation, from the best beaches in the region and great opportunities for hiking to outdoor activities like canoeing, fishing, cross-country skiing and snowshoeing. These spots are all within a four-hour drive, with some being easier to get to than others. If you’re looking for other ways to skip town, the best day trips or weekend getaways within Montreal’s orbit are where it’s at",
+            "This large conservation park just outside downtown Ottawa-Gatineau offers year-round camping, ranging from ordinary tent camping to RV sites, canoe-camping sites and ready-to-camp units which include yurts, tents and cabins.",
+        author: {
+            id: "588c2e092403d111454fff71",
+            username: "Jill",
+        },
     },
     {
-        name: "Love Journy",
-        image: "https://cdn.stocksnap.io/img-thumbs/280h/GUYV05GAYJ.jpg",
+        name: "Natual Breath",
+        image: "https://cdn.stocksnap.io/img-thumbs/280h/HQR8BJFZID.jpg",
         description:
-            "The back woods, mountains, rivers and lakes of Québec and the Northeast make for excellent camping near Montreal. Whether you’re looking for an easy-going full-service RV experience or a rugged adventure off the beaten path, these campgrounds are your best bet. All offer access to some form of (rugged) rest and relaxation, from the best beaches in the region and great opportunities for hiking to outdoor activities like canoeing, fishing, cross-country skiing and snowshoeing. These spots are all within a four-hour drive, with some being easier to get to than others. If you’re looking for other ways to skip town, the best day trips or weekend getaways within Montreal’s orbit are where it’s at",
-    },
-    {
-        name: "Quiet Dark",
-        image: "https://cdn.stocksnap.io/img-thumbs/280h/LXJNKNODU0.jpg",
-        description:
-            "The back woods, mountains, rivers and lakes of Québec and the Northeast make for excellent camping near Montreal. Whether you’re looking for an easy-going full-service RV experience or a rugged adventure off the beaten path, these campgrounds are your best bet. All offer access to some form of (rugged) rest and relaxation, from the best beaches in the region and great opportunities for hiking to outdoor activities like canoeing, fishing, cross-country skiing and snowshoeing. These spots are all within a four-hour drive, with some being easier to get to than others. If you’re looking for other ways to skip town, the best day trips or weekend getaways within Montreal’s orbit are where it’s at",
+            "The Adirondacks are northern New York’s mountain playground, and this campground just outside of Lake Placid, New York will give you a good taste of the area while being a minimal distance from Montreal. The neighbouring Whiteface Mountain is one of the highest in the area, so hikers and climbers should have more than enough to keep them preoccupied. ",
+        author: {
+            id: "588c2e092403d111454fff77",
+            username: "Jane",
+        },
     },
 ];
 
-async function seedDB() {
-    try {
-        await Comment.deleteMany({});
-        console.log("Removed All Comments");
-        await Campground.deleteMany({});
-        console.log("Removed All Campgrounds");
-        for (const seed of seeds) {
-            let campground = await Campground.create(seed);
-            //console.log("Campground created");
-            let comment = await Comment.create({
-                text: "This is an awesome experience",
-                author: "Leet L",
-            });
-            //console.log("Comment created");
-            campground.comments.push(comment);
-            campground.save();
-            //console.log("Comment added to campground");
+function seedDB() {
+    //Remove all campgrounds
+    Campground.deleteMany({}, function (err) {
+        if (err) {
+            console.log(err);
         }
-    } catch (err) {
-        console.log(err.message);
-    }
+        console.log("removed campgrounds!");
+        Comment.deleteMany({}, function (err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("removed comments!");
+            //add a few campgrounds
+            data.forEach(function (seed) {
+                Campground.create(seed, function (err, campground) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("added a campground");
+                        //create a comment
+                        Comment.create(
+                            {
+                                text:
+                                    "This place is great, but I wish there was internet",
+                                author: {
+                                    id: "588c2e092403d111454fff76",
+                                    username: "Jack",
+                                },
+                            },
+                            function (err, comment) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    campground.comments.push(comment);
+                                    campground.save();
+                                    console.log("Created new comment");
+                                }
+                            }
+                        );
+                    }
+                });
+            });
+        });
+    });
 }
 
 module.exports = seedDB;

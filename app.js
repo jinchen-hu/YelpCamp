@@ -2,6 +2,7 @@ const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    methodOVerride = require("method-override"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     Campground = require("./models/campground"),
@@ -27,8 +28,9 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOVerride("_method"));
 
-//seedDB();
+seedDB();
 
 // PASSPORT CONFIGURATION
 app.use(
