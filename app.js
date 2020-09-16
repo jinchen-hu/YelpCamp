@@ -31,6 +31,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOVerride("_method"));
 app.use(flash());
+app.locals.moment = require("moment");
 
 seedDB();
 
