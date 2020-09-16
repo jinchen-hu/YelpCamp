@@ -2,6 +2,7 @@ const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
+    flash = require("connect-flash"),
     methodOVerride = require("method-override"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
@@ -29,10 +30,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOVerride("_method"));
+app.use(flash());
 
 seedDB();
 
-// PASSPORT CONFIGURATION
 app.use(
     require("express-session")({
         secret: "Once again Rusty wins cutest dog!",
@@ -40,6 +41,8 @@ app.use(
         saveUninitialized: false,
     })
 );
+
+// PASSPORT CONFIGURATION
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -48,6 +51,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 
