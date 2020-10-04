@@ -19,20 +19,14 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
+const url = process.env.DATABASEURL || "mongodb://localhost:27017/portfolio";
 mongoose
-    .connect(
-        "mongodb+srv://" +
-            process.env.USERNAME +
-            ":" +
-            process.env.PASSWORD +
-            "@yelpcamp.vhej6.mongodb.net/yelp?retryWrites=true&w=majority",
-        {
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-        }
-    )
+    .connect(url, {
+        useNewUrlParser: true,
+        useFindAndModify: false,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+    })
     .then(() => console.log("Connected to the MongoDB!"))
     .catch((err) => console.log(err.message));
 
@@ -73,6 +67,7 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-app.listen(4444, () => {
+const port = process.env.PORT || 4444;
+app.listen(port, () => {
     console.log("The YelpCamp Server Has Started!");
 });
