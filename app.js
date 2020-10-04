@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -16,16 +17,23 @@ var commentRoutes = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes = require("./routes/index");
 
-// Connect to the Database
 mongoose
-    .connect("mongodb://localhost:27017/yelp_camp", {
-        useNewUrlParser: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-    })
+    .connect(
+        "mongodb+srv://" +
+            process.env.USERNAME +
+            ":" +
+            process.env.PASSWORD +
+            "@yelpcamp.vhej6.mongodb.net/yelp?retryWrites=true&w=majority",
+        {
+            useNewUrlParser: true,
+            useFindAndModify: false,
+            useCreateIndex: true,
+            useUnifiedTopology: true,
+        }
+    )
     .then(() => console.log("Connected to the MongoDB!"))
     .catch((err) => console.log(err.message));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
