@@ -54,4 +54,3 @@ In addition, this project was actually developed during a code-along while follo
 7. In-app Notifications
 8. Refactor callbacks to Async/Await
 9. Migrate to Bootstrap 4
-10. Deploy with Heroku
