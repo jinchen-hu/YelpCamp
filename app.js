@@ -1,5 +1,7 @@
 require("dotenv").config();
-const express = require("express"),
+const session = require("express-session"),
+    MongoStore = require("connect-mongo")(session),
+    express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
@@ -44,10 +46,12 @@ app.locals.moment = require("moment");
 seedDB();
 
 app.use(
-    require("express-session")({
-        secret: "Once again Rusty wins cutest dog!",
+    session({
+        secret: "Mayday is the best music band!",
         resave: false,
         saveUninitialized: false,
+        store: new MongoStore({ mongooseConnection: mongoose.connection }),
+        cookie: { maxAge: 180 * 60 * 1000 },
     })
 );
 
