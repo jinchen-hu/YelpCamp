@@ -27,21 +27,21 @@ In addition, this project was actually developed during a code-along while follo
 
 ### Build With
 
-* [Visual Studio Code](https://code.visualstudio.com/)
-* [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
-* [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
+-   [Visual Studio Code](https://code.visualstudio.com/)
+-   [Node.js](https://nodejs.org/en/)
+-   [MongoDB](https://www.mongodb.com/)
+-   [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
 
-* [express](https://www.npmjs.com/package/express)
-* [express-session](https://www.npmjs.com/package/express-session)
-* [ejs](https://www.npmjs.com/package/ejs)
-* [body-parser](https://www.npmjs.com/package/body-parser)
-* [mongoose](https://www.npmjs.com/package/mongoose)
-* [method-override](https://www.npmjs.com/package/method-override)
-* [passport](https://www.npmjs.com/package/passport)
-* [passport-local](https://www.npmjs.com/package/passport-local)
-* [moment](https://www.npmjs.com/package/moment)
-* [connect-flash](https://www.npmjs.com/package/connect-flash)
+-   [express](https://www.npmjs.com/package/express)
+-   [express-session](https://www.npmjs.com/package/express-session)
+-   [ejs](https://www.npmjs.com/package/ejs)
+-   [body-parser](https://www.npmjs.com/package/body-parser)
+-   [mongoose](https://www.npmjs.com/package/mongoose)
+-   [method-override](https://www.npmjs.com/package/method-override)
+-   [passport](https://www.npmjs.com/package/passport)
+-   [passport-local](https://www.npmjs.com/package/passport-local)
+-   [moment](https://www.npmjs.com/package/moment)
+-   [connect-flash](https://www.npmjs.com/package/connect-flash)
 
 ## Roadmap
 
