@@ -1,5 +1,6 @@
-<h2><span style="color:red">There will be significant changes next month including await/async, google map ....</span></h2>
-
+```diff
+- There will be significant changes next month (Nov.) including await/async, google map ....
+```
 # YelpCamp
 
 # ![homepage-screenshot](images/homepage-screenshot.png)
